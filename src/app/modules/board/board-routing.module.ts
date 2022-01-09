@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
 import {BoardViewComponent} from "./_smart-components/board-view/board-view.component";
-import {ResultViewComponent} from "./_smart-components/result/result-view.component";
+import {ResultViewComponent} from "./_smart-components/result-view/result-view.component";
 
 const routes: Routes = [
   {

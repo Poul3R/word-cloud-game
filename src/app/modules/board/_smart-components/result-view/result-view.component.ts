@@ -5,7 +5,7 @@ import {Router} from "@angular/router";
 import {ResetGame} from "../../../../store/actions/game.actions";
 
 @Component({
-  selector: 'app-result-view',
+  selector: 'app-result-view-view',
   templateUrl: './result-view.component.html',
   styleUrls: ['./result-view.component.scss']
 })
