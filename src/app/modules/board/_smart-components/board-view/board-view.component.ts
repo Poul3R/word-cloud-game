@@ -3,6 +3,8 @@ import {WordSetsService} from "../../_services/word-sets.service";
 import {BoardModel} from "../../models/board.model";
 import {Store} from "@ngxs/store";
 import {UserState} from "../../../../store/states/user.state";
+import {CountPointsResult, EnableWordsFlag, SelectWord, SetWordsSet} from "../../../../store/actions/game.actions";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-board-view',
@@ -13,17 +15,14 @@ export class BoardViewComponent implements OnInit {
   wordsSet: BoardModel.IWordsSet | null;
   sets: BoardModel.IWordsSet[];
   enableFinishGame: boolean = false;
-  gameFinished: boolean = false;
   user: string | null;
-  result = 0;
 
-  private _selectedWords: string[] = [];
-
-
+  private _selectedWords: any = [];
 
   constructor(
     private readonly _wordSetsService: WordSetsService,
-    private readonly _store: Store
+    private readonly _store: Store,
+    private readonly _router: Router
   ) {
   }
 
@@ -36,57 +35,28 @@ export class BoardViewComponent implements OnInit {
   }
 
   getRandomSet(): void {
+    console.log('LOSUJEMY ZESAW')
     this.wordsSet = this.sets[Math.floor(Math.random() * this.sets.length)];
+    console.log(this.wordsSet)
+    this._store.dispatch(new SetWordsSet(this.wordsSet));
   }
 
   checkAnswers(): void {
-    this._wordSetsService.showWordFlags$.next(true);
+    this._store.dispatch(new EnableWordsFlag(true));
+
     this.enableFinishGame = true;
   }
 
-  isCorrect(word: string): boolean {
+  wordIsCorrect(word: string): boolean {
     return this.wordsSet!.good_words.includes(word);
   }
 
   clickedWord(word: string): void {
-    if (this._selectedWords.includes(word)) {
-      const index = this._selectedWords.indexOf(word);
-      this._selectedWords.splice(index, 1);
-    } else {
-      this._selectedWords.push(word);
-    }
+    this._store.dispatch(new SelectWord(word));
   }
 
   finishGame(): void {
-    this.result = this.countPoints();
-    this.gameFinished = true;
-  }
-
-  countPoints(): number {
-    let selectedCorrectAnswers = 0;
-    let leftCorrectAnswers = 0;
-
-    this.wordsSet!.good_words.forEach(word => {
-      if (this._selectedWords.includes(word)) {
-        selectedCorrectAnswers++;
-      } else {
-        leftCorrectAnswers++;
-      }
-    });
-
-    const selectedWrongAnswers = this._selectedWords.length - selectedCorrectAnswers;
-
-    const result = (selectedCorrectAnswers * 2) - (leftCorrectAnswers + selectedWrongAnswers);
-
-    return result > 0 ? result : 0;
-  }
-
-  resetGame(): void {
-    this.wordsSet = null;
-    this.enableFinishGame = false;
-    this.gameFinished = false;
-    this.result = 0;
-    this._selectedWords = [];
-    this._wordSetsService.showWordFlags$.next(false);
+    this._store.dispatch(new CountPointsResult());
+    this._router.navigate(['/', 'board', 'result']);
   }
 }

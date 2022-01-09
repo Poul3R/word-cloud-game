@@ -4,10 +4,10 @@ import {BoardViewComponent} from "./_smart-components/board-view/board-view.comp
 import {BoardRoutingModule} from "./board-routing.module";
 import {WordSetsService} from "./_services/word-sets.service";
 import { ElementComponent } from './_dumb-components/element/element.component';
-import { ResultComponent } from './_dumb-components/result/result.component';
+import { ResultViewComponent } from './_smart-components/result/result-view.component';
 
 @NgModule({
-  declarations: [BoardViewComponent, ElementComponent, ResultComponent],
+  declarations: [BoardViewComponent, ElementComponent, ResultViewComponent],
   imports: [CommonModule, BoardRoutingModule],
   providers: [WordSetsService]
 })

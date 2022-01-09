@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, Observable, of} from "rxjs";
+import {Observable, of} from "rxjs";
 import {BoardModel} from "../models/board.model";
 
 const mock: BoardModel.IWordsSet[] = [
@@ -73,8 +73,6 @@ const mock: BoardModel.IWordsSet[] = [
 
 @Injectable()
 export class WordSetsService {
-  readonly showWordFlags$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
   constructor() {
   }
 

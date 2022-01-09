@@ -1,32 +1,41 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {WordSetsService} from "../../_services/word-sets.service";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
+import {Store} from "@ngxs/store";
+import {GameState} from "../../../../store/states/game.state";
 
 @Component({
   selector: 'app-element',
   templateUrl: './element.component.html',
   styleUrls: ['./element.component.scss']
 })
-export class ElementComponent implements OnInit {
+export class ElementComponent implements OnInit, OnDestroy {
   @Input() word: string;
   @Input() correct: boolean;
   @Output() clicked: EventEmitter<string> = new EventEmitter<string>();
   selected: boolean = false;
-  showFlag: Observable<boolean>;
+  showFlag: boolean;
+  subscription$: Subscription = new Subscription();
 
-  constructor(private readonly _wordSetsService: WordSetsService) {
+  constructor(private readonly _wordSetsService: WordSetsService, private readonly _store: Store) {
   }
 
   ngOnInit(): void {
-    this.showFlag = this._wordSetsService.showWordFlags$;
+
+    this.subscription$.add(
+      this._store.select(GameState.showWordFlags).subscribe(enable => {
+        this.showFlag = enable;
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
   }
 
   clickElement() {
-    this.showFlag.subscribe(show => {
-      if (!show) {
+      if (!this.showFlag) {
         this.selected = !this.selected;
         this.clicked.emit(this.word);
       }
-    });
   }
 }

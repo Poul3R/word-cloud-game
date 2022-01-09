@@ -1,4 +1,4 @@
 <div class="element" (click)="clickElement()" [class.element--selected]="selected">
   <div class="element__content">{{word}}</div>
-  <div class="element__flag" *ngIf="showFlag | async">{{correct ? 'Good' : 'Bad'}}</div>
+  <div class="element__flag" *ngIf="showFlag">{{correct ? 'Good' : 'Bad'}}</div>
 </div>
