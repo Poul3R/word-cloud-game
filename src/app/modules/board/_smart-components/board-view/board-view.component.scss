@@ -1,0 +1,81 @@
+@import "src/styles/assets";
+
+.wrapper {
+  min-height: 100vh;
+  background: url('../../../../../assets/images/login-bg.jpg') center no-repeat;
+  background-size: cover;
+}
+
+.nav {
+  height: 70px;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  height: calc(100vh - 70px);
+  position: relative;
+}
+
+.no-set {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  &__header {
+    margin-bottom: 20px;
+    text-align: center;
+
+    @media all and (max-width: 768px) {
+     font-size: 20px;
+    }
+  }
+}
+
+.board {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.8);
+  padding: 50px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #888;
+
+  @media all and (max-width: 768px) {
+    position: static;
+    transform: unset;
+  }
+
+  &__title {
+    margin-bottom: 50px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 15px;
+    margin-bottom: 50px;
+
+    @media all and (max-width: 1000px) {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    @media all and (max-width: 768px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media all and (max-width: 768px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media all and (max-width: 489px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}

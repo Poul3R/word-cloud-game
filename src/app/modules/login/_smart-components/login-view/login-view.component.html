@@ -1,0 +1,10 @@
+<div class="wrapper">
+  <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-box">
+    <h2 class="login-box__title">Welcome to WordCloudGame</h2>
+    <div class="form-control">
+      <input type="text" placeholder="Enter your nick here..." formControlName="login" class="form-control__input">
+      <app-input-error [_control]="getFormControl('login')"></app-input-error>
+    </div>
+    <button type="submit" class="button">Play now</button>
+  </form>
+</div>

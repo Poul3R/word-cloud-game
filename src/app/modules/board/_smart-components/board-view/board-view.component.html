@@ -1,0 +1,35 @@
+<div class="wrapper">
+  <nav class="nav">
+    Hello {{user}}, Enjoy the game!
+  </nav>
+
+  <div class="container">
+<!--    <ng-container *ngIf="!gameFinished">-->
+      <div class="no-set" *ngIf="!wordsSet">
+        <h1 class="no-set__header">Pick random word set to start the game</h1>
+        <button (click)="getRandomSet()" class="button button--full">Get words</button>
+      </div>
+
+      <div class="board" *ngIf="wordsSet">
+        <h2 class="board__title">{{wordsSet.question}}</h2>
+
+        <div class="board__content">
+          <app-element
+            (clicked)="clickedWord($event)"
+            [word]="word"
+            [correct]="isCorrect(word)"
+            *ngFor="let word of wordsSet.all_words"></app-element>
+        </div>
+
+        <button (click)="checkAnswers()" class="button" *ngIf="!enableFinishGame">Check answers</button>
+        <button (click)="finishGame()" class="button" *ngIf="enableFinishGame">Finish game</button>
+      </div>
+<!--    </ng-container>-->
+
+    <app-result
+      *ngIf="gameFinished"
+      (closeWindow)="resetGame()"
+      [points]="result" ></app-result>
+  </div>
+</div>
+
